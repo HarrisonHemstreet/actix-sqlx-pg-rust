@@ -9,11 +9,6 @@ struct Student {
     name: Option<String>,
 }
 
-#[get("/hello/{name}")]
-async fn greet(name: web::Path<String>) -> impl Responder {
-    format!("Hello {}!", name)
-}
-
 #[get("/get_json")]
 async fn get_json() -> impl Responder {
     let pool = PgPoolOptions::new()
@@ -34,7 +29,7 @@ async fn get_json() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| App::new().service(greet).service(get_json))
+    HttpServer::new(|| App::new().service(get_json))
         .bind(("127.0.0.1", 8080))?
         .run()
         .await
